@@ -1,0 +1,136 @@
+body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.container{
+    background: url(../img/aeroplane1.jpg) no-repeat;
+    background-size:cover;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.ccc{
+    position: relative;
+    height: 100%;
+    overflow: auto;
+}
+.content{
+    width: max-content;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.864);
+    border-radius: 5px;
+    display: block;
+    justify-content: center;
+    padding: 10px 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.sign{
+    width: 30%;
+}
+label{
+    font-size: 14px;
+}
+.content h2{
+    text-align: center;
+}
+.user-input{
+    padding:7px 5px;
+    border-radius: 5px;
+    outline: none;
+    border: 2px solid rgb(0, 179, 255);
+    margin: 5px auto 10px;
+    width: 94.5%;
+    position: relative;
+}
+.sign .user-input{
+    padding:7px 5px;
+    border-radius: 5px;
+    outline: none;
+    border: 2px solid rgb(0, 179, 255);
+    margin: 2px auto 5px;
+    width: 94.5%;
+    position: relative;
+    overflow: auto;
+}
+select{
+    width: 96.5%;
+}
+.sign .btn{
+    margin:10px 0 2px;
+}
+.btn{
+    padding: 7px;
+    border-radius: 5px;
+    border: 2px solid rgb(0, 179, 255);
+    background-color: rgb(0, 179, 255);
+    color: white;
+    margin: 18px 0;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+}
+.btn:hover{
+    background-color: rgb(3, 77, 108);
+    border: 2px solid rgb(3, 77, 108);
+    color: white;
+}
+.btn:active{
+    background-color: crimson;
+    border: 2px solid crimson;
+    color: white;
+}
+.loaderx{
+    margin: auto;
+    color: white;
+    padding: 5px;
+    width: 10rem;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.866);
+    position: absolute;
+    top: 15rem;
+    left: 35rem;
+}
+.loadery{
+    z-index: 9999999;
+    display: none;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.127);
+}
+.loader{
+    margin: 2px auto;
+    border: 2px solid white;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    animation: rotatex 1s infinite linear;
+}
+@keyframes rotatex {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+.msgbox{
+    background-color: rgba(255, 0, 0, 0.854);
+    width: 10rem;
+    height: 50px;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    /* align-items: center;/ */
+    /* align-content: center; */
+    position: absolute;
+    top:  0;
+    left: 34rem;
+    display: none;
+}
