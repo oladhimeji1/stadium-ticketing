@@ -67,3 +67,5 @@ const football = [
         price2: 50
     },
 ]
+
+const nav = ['Matches', 'History']

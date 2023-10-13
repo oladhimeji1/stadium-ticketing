@@ -1,12 +1,15 @@
 const matches = document.getElementById('matches')
 const footballContainer = document.getElementById('football')
+const history = document.getElementById('history');
+const navigate = document.getElementById('nav');
 
 var seat, vipPrice, regPrice;
 
 $('document').ready(() => { 
 
-    upcomingX()
-    footballX()
+    upcomingX();
+    footballX();
+    historyX();
 })
 
 
@@ -24,7 +27,7 @@ function upcomingX(){
     upcoming.forEach((item, index) => {
     const element = document.createElement('div');
     element.innerHTML += `
-    <div class="card" id="card" onclick='alert(${item})' title="Clic here to make a reservation">
+    <div class="card" id="card" onclick='' title="Clic here to make a reservation">
         <img src="../img/aeroplane.jpg" alt="">
         <h3>${item.title}</h3>
         <div class="details1">
@@ -48,7 +51,7 @@ function footballX(){
     football.forEach((item, index) => {
     const element = document.createElement('div');
     element.innerHTML += `
-    <div class="card" id="card" onclick='alert(${item})' title="Clic here to make a reservation">
+    <div class="card" id="card" onclick='' title="Clic here to make a reservation">
         <img src="../img/aeroplane.jpg" alt="">
         <h3>${item.title}</h3>
         <div class="details1">
@@ -82,7 +85,7 @@ function match(title, date, time, seats, price1, price2){
         id = 'STA/' + id
     }
 
-    var uname = localStorage.getItem('uname');
+    var uname = sessionStorage.getItem('email');
 
     $('#id').val(id)
     $('#oname').val(uname);
@@ -100,18 +103,96 @@ function match(title, date, time, seats, price1, price2){
     $('#reserve-container').fadeIn(500)
 }
 
-function submitHandler(){
-    // This is where the form to buy a ticket would be sent
-    // to the backend
-    $('#seat').val();
-    $('#id').val()
-    $('#oname').val()
-    $('#price').val()
-    $('#match').val()
-
-}
-
-$('#close').click(() => {
+$('.fa').click(() => {
     $('#reserve-container').fadeOut(500)
+    $('#booking-details').fadeOut(500)
     // console.log(upcoming)
 })
+
+$('#btnx').click(() => {
+    // This is where the form to buy a ticket would be sent
+    // to the backend
+
+    const _data = { 
+        id: $('#id').val(),
+        email: $('#oname').val(), 
+        match: $('#match').val(),
+        seat: $('#seat').val(),
+        price: $('#price').val(),
+    }
+    // console.log(_data)
+    fetch('http://localhost:3000/book-ticket', {
+        method: 'POST',
+        body: JSON.stringify(_data),
+        headers: {'Content-type': 'application/json; charset=utf-8'}
+    })
+    // .then(response => response.json())
+    .then(datax => {
+        console.log(datax)
+        // $('.loadery').fadeOut(300);
+        // // location.reload(true);
+        // $('.msgbox').slideDown(200);
+        // msgx.innerHTML = 'You have register successfully';
+        // $('.msgbox').delay(3000);
+        // $('.msgbox').slideUp(200, ()=>{
+        //     location.assign('../login.php');
+        // });
+        
+    })
+    .catch(err => console.log(err));
+})
+
+function historyX(){
+    football.forEach((item, index) => {
+    const element = document.createElement('div');
+    element.innerHTML += `
+            <div class="hist" title="Click here to preview receipt">
+                <div>
+                   <img src="../img/aeroplane.jpg" alt="">
+                   <h3>${item.title}</h3> 
+                </div>
+                <p>${item.time}</p>
+                <p>&#8358;${item.price1}</p>
+                <p>${item.date}</p>
+            </div>`;
+
+        history.appendChild(element)
+
+    element.addEventListener('click', () => details(item.title, item.date, item.time, item.seats, item.price1, item.price2))
+    })
+}
+
+function details(title, date, time, seats, price1, price2){
+    seat = $('#seat').val()
+    vipPrice = price1;
+    regPrice = price2;
+
+    var uname = sessionStorage.getItem('email');
+
+    $('.id').html(123)
+    $('.oname').html(uname);
+    
+    $('.match').html(title)
+    $('.date').html(date)
+    $('.time').html(time)
+    $('.seats').html(seats)
+
+    if(seat == 'VIP'){
+        $('.price').val(price1)
+    } else if(seat == 'regular'){
+        $('.price').val(price2)
+    }
+    $('#booking-details').fadeIn(500)
+}
+
+
+$('#match-item').click(() => {
+    $('.content').show(500)
+    $('.history').hide(500)
+})
+
+$('#history-item').click(() => {
+    $('.content').hide(500)
+    $('.history').show(500)
+})
+

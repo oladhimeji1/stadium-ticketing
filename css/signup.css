@@ -97,7 +97,7 @@ select{
     left: 35rem;
 }
 .loadery{
-    z-index: 9999999;
+    z-index: 99999999999999;
     display: none;
     height: 100vh;
     width: 100vw;
@@ -121,14 +121,13 @@ select{
 }
 .msgbox{
     background-color: rgba(255, 0, 0, 0.854);
-    width: 10rem;
+    width: max-content;
     height: 50px;
     color: white;
-    text-align: center;
+    padding: 0 3px;
     display: flex;
     justify-content: center;
-    /* align-items: center;/ */
-    /* align-content: center; */
+    z-index: 999999999999999;
     position: absolute;
     top:  0;
     left: 34rem;

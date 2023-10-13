@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airline booking system | Regster page</title>
-    <link rel="stylesheet" href="./css/signup.css">
+    <link rel="stylesheet" href="../css/signup.css">
     <script src="../js/jquery.js"></script>
 </head>
 <body>
@@ -57,7 +57,7 @@
             
             <button id="btnx" class="btn">Signup</button>
 
-            <p class="msg">Already have an account? <a href="index.php">Login</a></p>
+            <p class="msg">Already have an account? <a href="../index.php">Login</a></p>
         </div>
     </div>
 

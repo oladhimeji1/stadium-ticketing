@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airline booking system | Login page</title>
     <link rel="stylesheet" href="./css/signup.css">
-    <script src="../js/jquery.js"></script>
+    <script src="./js/jquery.js"></script>
 </head>
 <body>
     <div class="container">
@@ -31,11 +31,11 @@
                 <input name="password" type="password" placeholder="Enter Password" class="user-input" id="password">
                 <br>
                 <button id="btny" class="btn">Login</button>
-                <p class="msg">Don't have an account? <a href="signup.php">Register</a></p>
+                <p class="msg">Don't have an account? <a href="./pages/signup.php">Register</a></p>
             </div>
         </div>
     </div>
 
-    <script src="../js/login.js"></script>
+    <script src="./js/login.js"></script>
 </body>
 </html>

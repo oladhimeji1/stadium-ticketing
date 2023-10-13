@@ -16,6 +16,11 @@
         <div class="inner">
             <h2>Stadium Tickes</h2>
 
+            <div id="nav" class="nav">
+                <li id="match-item">Matches</li>
+                <li id="history-item">History</li>
+            </div>
+
             <div class="welcome">
                 <p>Welcome, <span class="user">Abdulrazaq Oladimeji</span></p>
                 <img src="../img/aeroplane.jpg" alt="">
@@ -44,6 +49,52 @@
             </div>
         </div>
     </section>
+
+    <section class="history">
+    <div class="container">
+        <div class="history content-head">
+            <h1>Your History</h1>
+            <p>History of tickets you buy</p>
+        </div>
+        <div id="history" class="history-body">
+            
+        </div>
+    </div>
+    </section>
+
+    <div class="booking-details" id="booking-details">
+        <div class="reserve">
+            <div class="head">
+                <h2>Booking Details</h2>
+                <i id="close" class="fa fa-close"></i>
+            </div>
+
+            <div class="label">
+                <label for="id">Ticket ID: </label><span class="id">dhsajdh</span>
+            </div>
+            
+            <div class="label">
+                <label for="match">Match: </label> <span class="match">DVD vs CSV</span>
+            </div>
+
+            <div class="label">
+                <label for="oname">Name: </label><span class="oname">Name</span>
+            </div>
+
+            <div class="label">
+                <label for="price">Amount: &#8358;</label><span class="price">5000</span>
+            </div>
+
+            <div class="label">
+                <label for="date">Date: </label><span class="date">12/12/2023</span>
+            </div>
+
+            <div class="label">
+                <label for="time">Time: </label><span class="time">4:00 pm</span>
+            </div>
+            
+        </div>
+    </div>
 
     <!-- Reservation card -->
     <div id="reserve-container" class="reserve-container">
