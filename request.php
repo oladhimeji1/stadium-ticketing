@@ -1,16 +1,16 @@
 <?php
 // connection to database
 
-// $servername = "localhost:3302";
-// $username = "root";
-// $password = ""; 
-// $dbname = "examhall_db";
+$servername = "localhost:3302";
+$username = "root";
+$password = ""; 
+$dbname = "examhall_db";
 
 // mike connection
-$servername = "localhost:3306";
-$username = "root";
-$password = "afo@@1234M#4"; 
-$dbname = "examhall_db";
+// $servername = "localhost:3306";
+// $username = "root";
+// $password = "afo@@1234M#4"; 
+// $dbname = "examhall_db";
 
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);

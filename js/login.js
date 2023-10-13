@@ -6,13 +6,17 @@ $('#btny').click(()=>{
     password = $('#password').val();
 
     sessionStorage.setItem('email', username);
-    const _data = {
-        username: username,
-        password: password
-    }
+    // const _data = {
+    //     username: username,
+    //     password: password
+    // }
 
     $('.loadery').fadeIn(300);
     $('.loadery').delay(1000);
+
+    $('.loadery').hide(500, ()=>{
+        window.location.assign('./pages/matches.php')
+    })
 
     fetch('http://localhost:3000/login', {
         method: 'POST',
@@ -67,38 +71,37 @@ $('#btnx').click(()=>{
         $('.loadery').delay(1000);
 
         sessionStorage.setItem('uname', fullname);
-        const _data = { 
-            fullname: fullname, 
-            phone: phone,
-            email: email,
-            address: address,
-            fav: fav,
-            psw: psw
-        }
-        var xhttp = new XMLHttpRequest();
+        
+        $('.loadery').fadeIn(300);
+        $('.loadery').delay(1000);
+
+        $('.loadery').hide(500, ()=>{
+            window.location.assign('../')
+        })
+        // var xhttp = new XMLHttpRequest();
     
-        xhttp.onreadystatechange = function(err) {
+        // xhttp.onreadystatechange = function(err) {
 
-            if (this.readyState == 4 && this.status == 200){
+        //     if (this.readyState == 4 && this.status == 200){
 
-                str = xhttp.responseText;
-                str = str.replace(/<\/?[^>]+>/gi, '');
-                str = $.trim(str.replace('Ajax',''));
-                str = $.trim(str.replace('Document',''));
+        //         str = xhttp.responseText;
+        //         str = str.replace(/<\/?[^>]+>/gi, '');
+        //         str = $.trim(str.replace('Ajax',''));
+        //         str = $.trim(str.replace('Document',''));
                 
-                if(str=="student" || str=="lecturer" || str=="admin"){
-                    sessionStorage.setItem('str', str);
-                    window.location.assign('./pages/home.php')
-                } else {
-                    alert('Username or password is incorrect, please try again')
-                }
+        //         if(str=="student" || str=="lecturer" || str=="admin"){
+        //             sessionStorage.setItem('str', str);
+        //             window.location.assign('./pages/home.php')
+        //         } else {
+        //             alert('Username or password is incorrect, please try again')
+        //         }
             
-            } else {
-                console.log('Error reaching the server');
-            }
-        };
-        xhttp.open("Get", "request.php?opr=Signup" + "&fullname=" + fullname + "&phone=" +phone + "&email=" +email + "&address=" +address + "&fav=" +fav + "&psw=" +psw, true);
-        xhttp.send();
+        //     } else {
+        //         console.log('Error reaching the server');
+        //     }
+        // };
+        // xhttp.open("Get", "request.php?opr=Signup" + "&fullname=" + fullname + "&phone=" +phone + "&email=" +email + "&address=" +address + "&fav=" +fav + "&psw=" +psw, true);
+        // xhttp.send();
 
         // fetch('http://localhost:3000/reg-user', {
         //     method: 'POST',

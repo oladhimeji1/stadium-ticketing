@@ -10,6 +10,8 @@ $('document').ready(() => {
     upcomingX();
     footballX();
     historyX();
+
+    $('.user').html(sessionStorage.getItem('email'))
 })
 
 
@@ -28,7 +30,7 @@ function upcomingX(){
     const element = document.createElement('div');
     element.innerHTML += `
     <div class="card" id="card" onclick='' title="Clic here to make a reservation">
-        <img src="../img/aeroplane.jpg" alt="">
+        <img src="../img/stadium.jpg" alt="">
         <h3>${item.title}</h3>
         <div class="details1">
             <p>${item.date}</p>
@@ -52,7 +54,7 @@ function footballX(){
     const element = document.createElement('div');
     element.innerHTML += `
     <div class="card" id="card" onclick='' title="Clic here to make a reservation">
-        <img src="../img/aeroplane.jpg" alt="">
+        <img style='height: 10rem' src="../img/football.jpg" alt="">
         <h3>${item.title}</h3>
         <div class="details1">
             <p>${item.date}</p>
@@ -120,6 +122,11 @@ $('#btnx').click(() => {
         seat: $('#seat').val(),
         price: $('#price').val(),
     }
+
+    $('.reserve-container').fadeOut(300);
+
+    alert('Ticket booked successfully!! Kindly check "history" for your booking records')
+
     // console.log(_data)
     fetch('http://localhost:3000/book-ticket', {
         method: 'POST',
@@ -148,7 +155,7 @@ function historyX(){
     element.innerHTML += `
             <div class="hist" title="Click here to preview receipt">
                 <div>
-                   <img src="../img/aeroplane.jpg" alt="">
+                   <img src="../img/football.jpg" alt="">
                    <h3>${item.title}</h3> 
                 </div>
                 <p>${item.time}</p>
