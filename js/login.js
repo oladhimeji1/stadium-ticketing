@@ -6,48 +6,42 @@ $('#btny').click(()=>{
     password = $('#password').val();
 
     sessionStorage.setItem('email', username);
-    // const _data = {
-    //     username: username,
-    //     password: password
-    // }
+    
 
     $('.loadery').fadeIn(300);
     $('.loadery').delay(1000);
 
-    $('.loadery').hide(500, ()=>{
-        window.location.assign('./pages/matches.php')
-    })
+    // $('.loadery').hide(500, ()=>{
+    //     window.location.assign('./pages/matches.php')
+    // })
 
-    fetch('http://localhost:3000/login', {
+    $.ajax({
+        url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
         method: 'POST',
-        body: JSON.stringify(_data),
-        headers: {'Content-type': 'application/json; charset=utf-8'}
-    })
-    .then(response => response.json())
-    // .then(response => response.text())
-    .then(data => {
-        console.log(data)
-        // console.log(data[0].UserType)
-        // if(data == ![]){
-        //     $('.msgbox').slideDown(500);
-        //     $('.msgbox').delay(3000);
-        //     $('.msgbox').slideUp(500);
-        // }else if(data[0].UserType == 'Admin'){
-        //     $('.loadery').show(500)
-        //     $('.loadery').delay(2000)
-        //     $('.loadery').hide(500, ()=>{
-        //         window.location.assign('admin.html')
-        //     })
-        // }else if(data[0].UserType == 'user'){
-        //     $('.loadery').show(500)
-        //     $('.loadery').delay(2000)
-        //     $('.loadery').hide(500, ()=>{
-        //         window.location.assign('./pages/home.html')
-        //     })
-        // }
-    })
-    .catch(err => console.log(err));
-    
+        data: {
+            opr: 'Login',
+            username: username,
+            password: password
+        },
+        success: function(response) {
+            console.log(response.trim());
+            if (response.trim() == "Success"){
+                $('.loadery').hide(500, ()=>{
+                window.location.assign('./pages/matches.php');
+            })
+            }
+            else{
+                alert('Username or password is incorrect, please try and Register.');
+                $('.loadery').hide(500, ()=>{
+                    window.location.assign('./');
+                   })
+            }
+
+        },
+        error: function() {
+            console.error('Error sending data to server');
+        }
+});
     
 });
 
@@ -75,60 +69,42 @@ $('#btnx').click(()=>{
         $('.loadery').fadeIn(300);
         $('.loadery').delay(1000);
 
-        $('.loadery').hide(500, ()=>{
+       
+        
+        $.ajax({
+        url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
+        method: 'POST',
+        data: {
+            opr: 'Signup',
+            fullname: fullname,
+            phone: phone,
+            email: email,
+            address: address,
+            fav: fav, // Replace with the appropriate value
+            psw: psw  // Replace with the appropriate value
+        },
+        success: function(response) {
+            console.log('Data sent to server:', response);
+            // // Assuming the server sends back a 'result' array, you can loop through it and display in recommendations
+            // const recommendationItems = response.result.map(option => `<h4>${option}</h4>`).join('');
+            // const recommendation = `
+            //     <div class="bg-white p-4 rounded shadow mb-2">
+            //         ${recommendationItems}
+            //     </div>
+            // `;
+            // $('#recommendations').html(recommendation);
+            // nextStep();
+            $('.loadery').hide(500, ()=>{
             window.location.assign('../')
-        })
-        // var xhttp = new XMLHttpRequest();
-    
-        // xhttp.onreadystatechange = function(err) {
+           })
+        },
+        error: function() {
+            console.error('Error sending data to server');
+        }
+});
 
-        //     if (this.readyState == 4 && this.status == 200){
-
-        //         str = xhttp.responseText;
-        //         str = str.replace(/<\/?[^>]+>/gi, '');
-        //         str = $.trim(str.replace('Ajax',''));
-        //         str = $.trim(str.replace('Document',''));
-                
-        //         if(str=="student" || str=="lecturer" || str=="admin"){
-        //             sessionStorage.setItem('str', str);
-        //             window.location.assign('./pages/home.php')
-        //         } else {
-        //             alert('Username or password is incorrect, please try again')
-        //         }
-            
-        //     } else {
-        //         console.log('Error reaching the server');
-        //     }
-        // };
-        // xhttp.open("Get", "request.php?opr=Signup" + "&fullname=" + fullname + "&phone=" +phone + "&email=" +email + "&address=" +address + "&fav=" +fav + "&psw=" +psw, true);
-        // xhttp.send();
-
-        // fetch('http://localhost:3000/reg-user', {
-        //     method: 'POST',
-        //     body: JSON.stringify(_data),
-        //     headers: {'Content-type': 'application/json; charset=utf-8'}
-        // })
-        // // .then(response => response.json())
-        // .then(datax => {
-        //     console.log(datax)
-        //     $('.loadery').fadeOut(300);
-        //     // location.reload(true);
-        //     $('.msgbox').slideDown(200);
-        //     msgx.innerHTML = 'You have register successfully';
-        //     $('.msgbox').delay(3000);
-        //     $('.msgbox').slideUp(200, ()=>{
-        //         location.assign('../login.php');
-        //     });
-            
-        // })
-        // .catch(err => console.log(err));
-
-        // setTimeout(()=>{
-        //     $('.loadery').show(500)
-        //     $('.content').hide(500)
-        // }, 1000);
+       
     }
-    
 });
 
 $('#passwordx').keyup(()=>{

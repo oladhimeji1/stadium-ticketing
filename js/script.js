@@ -114,39 +114,31 @@ $('.fa').click(() => {
 $('#btnx').click(() => {
     // This is where the form to buy a ticket would be sent
     // to the backend
-
-    const _data = { 
-        id: $('#id').val(),
-        email: $('#oname').val(), 
-        match: $('#match').val(),
-        seat: $('#seat').val(),
-        price: $('#price').val(),
-    }
-
+    
+    
     $('.reserve-container').fadeOut(300);
 
-    alert('Ticket booked successfully!! Kindly check "history" for your booking records')
+    // alert('Ticket booked successfully!! Kindly check "history" for your booking records')
 
-    // console.log(_data)
-    fetch('http://localhost:3000/book-ticket', {
+    $.ajax({
+        url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
         method: 'POST',
-        body: JSON.stringify(_data),
-        headers: {'Content-type': 'application/json; charset=utf-8'}
-    })
-    // .then(response => response.json())
-    .then(datax => {
-        console.log(datax)
-        // $('.loadery').fadeOut(300);
-        // // location.reload(true);
-        // $('.msgbox').slideDown(200);
-        // msgx.innerHTML = 'You have register successfully';
-        // $('.msgbox').delay(3000);
-        // $('.msgbox').slideUp(200, ()=>{
-        //     location.assign('../login.php');
-        // });
-        
-    })
-    .catch(err => console.log(err));
+        data: {
+            opr: 'Buy_ticket',
+            id : $('#id').val(),
+            email: $('#oname').val(), 
+            matchx : $('#match').val(),
+            seat:$('#seat').val(),
+            price:$('#price').val(),
+        },
+        success: function(response) {
+            console.log(response.trim());
+            alert(response.trim())
+        },
+        error: function() {
+            console.error('Error sending data to server');
+        }
+    });
 })
 
 function historyX(){

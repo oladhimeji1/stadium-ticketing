@@ -1,78 +1,142 @@
 <?php
 // connection to database
 
-$servername = "localhost:3302";
-$username = "root";
-$password = ""; 
-$dbname = "examhall_db";
-
-// mike connection
-// $servername = "localhost:3306";
+// $servername = "localhost:3302";
 // $username = "root";
-// $password = "afo@@1234M#4"; 
+// $password = ""; 
 // $dbname = "examhall_db";
 
+// mike connection
+$servername = "localhost:3306";
+$username = "root";
+$password = ""; 
+$dbname = "Stadiumdb";
 
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
 
 $state = $_REQUEST['opr'];
 
 // switching request case
     switch($state){
-        case 'Loginx':
+        case 'Signup':
+            Signup();
+            break;
+        case 'Login':
             login();
             break;
-        case 'loadTimeTable1':
-            load_exam1();
+        case 'Buy_ticket':
+            Buy_ticket();
             break;
-        case 'loadTimeTable3':
-            load_exam2();
-            break;
-        case 'loadTimeTable4':
-            load_exam3();
-            break;
-        case 'loadTimeTable2':
-            load_class1();
-            break;
-        case 'loadall':
-            load_all();
-            break;
-        case 'updatexam':
-            Update_exam();
-            break;
-        case 'cleartable':
-            cleartable();
-            break;
-        case 'loadtoday':
-            loadtoday();
-            break;
+//         case 'loadTimeTable3':
+//             load_exam2();
+//             break;
+//         case 'loadTimeTable4':
+//             load_exam3();
+//             break;
+//         case 'loadTimeTable2':
+//             load_class1();
+//             break;
+//         case 'loadall':
+//             load_all();
+//             break;
+//         case 'updatexam':
+//             Update_exam();
+//             break;
+//         case 'cleartable':
+//             cleartable();
+//             break;
+//         case 'loadtoday':
+//             loadtoday();
+//             break;
     }
+
+// signup function 
+function Signup(){
+    // echo "not";
+    
+    $fullname = $_REQUEST['fullname'];
+    $phone = $_REQUEST['phone'];
+    $email = $_REQUEST['email'];
+    $address = $_REQUEST['address'];
+    $fav = $_REQUEST['fav'];
+    $psw = $_REQUEST['psw'];
+    
+    global $conn;
+    
+    // Creating a prepared statement to insert data into the 'registration' table.
+    $stmt = $conn->prepare("INSERT INTO registration (fullname, email, phone, address, fav, password) VALUES (?, ?, ?, ?, ?, ?)");
+    
+    // Binding parameters to the prepared statement.
+    $stmt->bind_param("ssssss", $fullname, $email, $phone, $address, $fav, $psw); 
+
+    if ($stmt->execute()) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Closing the prepared statement to free up resources.
+    $stmt->close();
+    
+    // Closing the database connection.
+    $conn->close();
+}
+
 // login in function
 function login(){
     $username =  $_REQUEST['username'];
     $password = $_REQUEST['password'];
-    $sql = "SELECT  * FROM logintablex WHERE username='" .$username . "' and password = '". $password."'";
     global $conn;
+    $sql = "SELECT  * FROM registration WHERE email='" .$username . "' and password = '". $password."'";
     $result = mysqli_query($conn,$sql);
     $row  = mysqli_fetch_array($result);
     
-    $_SESSION["username"] = $row['username'];
+    $_SESSION["username"] = $row['email'];
     $_SESSION["password"] = $row['password'];
-    $_SESSION["Accessability"] = $row['Accessability'];
-    $_SESSION["usertype"] = $row['usertype'];
-
+    
     $count=mysqli_num_rows($result);
     if( $_SESSION["username"] == $username  && $_SESSION["password"] == $password) {
-        echo $_SESSION["usertype"];
+        echo "Success";
     }
 
     else{
         echo  "Username or password is not valid";
     }
+    $conn->close();
+}
+
+function Buy_ticket(){
+    // echo "not";
+    
+    $id = $_REQUEST['id'];
+    $email = $_REQUEST['email'];
+    $matchx = $_REQUEST['matchx'];
+    $seat = $_REQUEST['seat'];
+    $price = $_REQUEST['price'];
+    
+    global $conn;
+    
+    // Creating a prepared statement to insert data into the 'registration' table.
+    $stmt = $conn->prepare("INSERT INTO buy_ticket (Ticket_ID, Name, Seat_type, Price, Matchx) VALUES (?, ?, ?, ?, ?)");
+    
+    // Binding parameters to the prepared statement.
+    $stmt->bind_param("sssss", $id, $email, $seat, $price, $matchx); 
+
+    if ($stmt->execute()) {
+        echo 'Ticket booked successfully!! Kindly check "history" for your booking records';
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Closing the prepared statement to free up resources.
+    $stmt->close();
+    
+    // Closing the database connection.
     $conn->close();
 }
 
