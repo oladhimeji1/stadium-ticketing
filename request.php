@@ -32,27 +32,9 @@ $state = $_REQUEST['opr'];
         case 'Buy_ticket':
             Buy_ticket();
             break;
-//         case 'loadTimeTable3':
-//             load_exam2();
-//             break;
-//         case 'loadTimeTable4':
-//             load_exam3();
-//             break;
-//         case 'loadTimeTable2':
-//             load_class1();
-//             break;
-//         case 'loadall':
-//             load_all();
-//             break;
-//         case 'updatexam':
-//             Update_exam();
-//             break;
-//         case 'cleartable':
-//             cleartable();
-//             break;
-//         case 'loadtoday':
-//             loadtoday();
-//             break;
+        case 'historyX':
+            historyX();
+            break;
     }
 
 // signup function 
@@ -118,14 +100,16 @@ function Buy_ticket(){
     $matchx = $_REQUEST['matchx'];
     $seat = $_REQUEST['seat'];
     $price = $_REQUEST['price'];
+    $date = $_REQUEST['date'];
+    $time = $_REQUEST['time'];
     
     global $conn;
     
     // Creating a prepared statement to insert data into the 'registration' table.
-    $stmt = $conn->prepare("INSERT INTO buy_ticket (Ticket_ID, Name, Seat_type, Price, Matchx) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO buy_ticket (Ticket_ID, Name, Seat_type, Price, Matchx,Day,Time) VALUES (?, ?, ?, ?, ?,?,?)");
     
     // Binding parameters to the prepared statement.
-    $stmt->bind_param("sssss", $id, $email, $seat, $price, $matchx); 
+    $stmt->bind_param("sssssss", $id, $email, $seat, $price, $matchx,$date,$time); 
 
     if ($stmt->execute()) {
         echo 'Ticket booked successfully!! Kindly check "history" for your booking records';
@@ -140,200 +124,37 @@ function Buy_ticket(){
     $conn->close();
 }
 
-function load_exam1(){
-
+function historyX(){
+    $email = $_REQUEST['email'];
     global $conn;
-    $sql = "SELECT * FROM examtimetable ORDER BY Datex ASC";
+    $sql = "SELECT * FROM buy_ticket WHERE Name='" .$email . "'  ORDER BY Day ASC";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // output data of each row
+        $response = array(); // Create an empty array to hold the data
+
         while($row = $result->fetch_assoc()) {
-            // echo "id: " . $row["Daytime"]. " - Name: " . $row["FirstPeriod"]. " " . $row["SecondPeriod"]. "<br>";
-            echo "<tr>";
-        // echo "<td>" . $row['Sno'] . "</td>";
-            echo "<td>" . $row['Datex'] . "</td>";
-            echo "<td>" . $row['Dayx'] . "</td>";
-            echo "<td>" . $row['Timex'] . "</td>";
-            echo "<td>" . $row['Course'] . "</td>";
-            echo "<td>" . $row['Venue'] . "</td>";
-            echo "</tr>"; 
+            $item = array(
+                'Ticket_ID' => $row['Ticket_ID'],
+                'Name' => $row['Name'],
+                'Seat_type' => $row['Seat_type'],
+                'Price' => $row['Price'],
+                'Matchx' => $row['Matchx'],
+                'Day' => $row['Day'],
+                'Time' => $row['Time'],
+            );
+
+            $response[] = $item; // Add the item to the response array
         }
+
+        // Send the response as JSON
+        echo json_encode(array('status' => 'success', 'data' => $response));
     } else {
-        echo "TIME TABLE NOT FOUND PLEASE CONTACT YOUR DESK OFFICER";
-    }
-    $conn->close();
-
-}
-
-function load_exam2(){
-    global $conn;
-    $sql = "SELECT * FROM examtimetable ORDER BY Datex ASC";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-            // echo "id: " . $row["Daytime"]. " - Name: " . $row["FirstPeriod"]. " " . $row["SecondPeriod"]. "<br>";
-            echo "<tr>";
-        // echo "<td>" . $row['Sno'] . "</td>";
-            echo "<td>" . $row['Datex'] . "</td>";
-            echo "<td>" . $row['Dayx'] . "</td>";
-            echo "<td>" . $row['Timex'] . "</td>";
-            echo "<td>" . $row['Course'] . "</td>";
-            echo "<td>" . $row['Venue'] . "</td>";
-            echo "<td>" . $row['Supervisor'] . "</td>";
-            echo "</tr>"; 
-        }
-    } else {
-        echo "TIME TABLE NOT FOUND PLEASE CONTACT YOUR DESK OFFICER";
-    }
-    $conn->close();
-
-}
-
-function load_exam3(){
-    global $conn;
-    $sql = "SELECT * FROM examtimetable ORDER BY Datex ASC";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-            // echo "id: " . $row["Daytime"]. " - Name: " . $row["FirstPeriod"]. " " . $row["SecondPeriod"]. "<br>";
-            echo "<tr>";
-            echo "<td>" . $row['Datex'] . "</td>";
-            echo "<td>" . $row['Dayx'] . "</td>";
-            echo "<td>" . $row['Timex'] . "</td>";
-            echo "<td>" . $row['Course'] . "</td>";
-            echo "<td>" . $row['Venue'] . "</td>";
-            echo "<td>" . $row['Supervisor'] . "</td>";
-            echo "</tr>"; 
-        }
-    } else {
-        echo "TIME TABLE NOT FOUND PLEASE CREATE ONE";
-    }
-    $conn->close();
-
-}
-
-function load_class1(){
-    global $conn;
-    $sql = "SELECT * FROM computer_science_class";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-            // echo "id: " . $row["Daytime"]. " - Name: " . $row["FirstPeriod"]. " " . $row["SecondPeriod"]. "<br>";
-            echo "<tr>";
-        // echo "<td>" . $row['Sno'] . "</td>";
-            echo "<td>" . $row['Daytime'] . "</td>";
-            echo "<td>" . $row['FirstPeriod'] . "</td>";
-            echo "<td>" . $row['SecondPeriod'] . "</td>";
-            echo "<td>" . $row['ThirdPeriod'] . "</td>";
-            echo "<td>" . $row['FourthPeriod'] . "</td>";
-            echo "</tr>"; 
-        }
-    } else {
-        echo "TIME TABLE NOT FOUND PLEASE CONTACT YOUR DESK OFFICER";
-    }
-    $conn->close();
-}
-
-function load_all(){
-    global $conn;
-    $sql = "SELECT * FROM examtimetable";
-    $result = $conn->query($sql);
-    $json_array = array();
-    if ($result->num_rows > 0) {
-        // output data of each row
-    
-        while($row = $result->fetch_assoc()) {
-            $json_array[] = $row; 
-        }
-        
-        echo json_encode($json_array);
-    } else {
-        echo "TIME TABLE NOT FOUND PLEASE CONTACT YOUR DESK OFFICER";
-    }
-    $conn->close();
-}
-
-function Update_exam(){
-    $datex =  $_REQUEST['datex'];
-    $dayx = $_REQUEST['dayx'];
-    $timex = $_REQUEST['timex'];
-    $course =  $_REQUEST['course'];
-    $venuex = $_REQUEST['venuex'];
-    $supervisorx = $_REQUEST['supervisorx'];
-    global $conn;
-
-    //$result = $conn->query($sql);
-
-    
-    $sql = "INSERT INTO examtimetable (Datex, Dayx, Timex, Course, Venue, Supervisor)
-    VALUES ('$datex','$dayx','$timex ', '$course ', '$venuex', '$supervisorx')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo json_encode(array('status' => 'error', 'message' => 'You do not have any exam today, check timetable below for more details.'));
     }
 
     $conn->close();
 }
 
-function cleartable(){
-    
-    global $conn;
-
-    //$result = $conn->query($sql);
-
-    
-    $sql = "TRUNCATE TABLE examtimetable";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "you have successively empty the table";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-
-    $conn->close();
-}
-
-        
-function loadtoday(){
-    $todayN =  $_REQUEST['todayN'];
-    // $todayN ="2023-01-09";
-    global $conn;
-    $sql = "SELECT * FROM examtimetable WHERE Datex='" .$todayN . "'  ORDER BY Datex ASC";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // output data of each row
-        echo "Today";
-        while($row = $result->fetch_assoc()) {
-            
-            echo "<div>";
-            echo "<p>" . $row['Dayx'] . "</p>";
-            echo "<p>" . $row['Datex'] . "</p>";
-            echo "</div><hr>";
-            echo "<div>";
-            echo "<p>" . $row['Course'] . "</p>";
-            echo "<p>" . $row['Timex'] . "</p>";
-            echo "</div><hr>";
-            echo "<div>";
-            echo "<p>" . $row['Venue'] . "</p>";
-            echo "<p>" . $row['Supervisor'] . "</p>";
-            echo "</div> <hr style='border: 1px solid red'>";
-
-        }
-    } else {
-        echo "You do not have any exam today, check timetable below for more details.";
-    }
-    $conn->close();
-
-}
     
 ?> 

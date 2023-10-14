@@ -6,12 +6,13 @@ const navigate = document.getElementById('nav');
 var seat, vipPrice, regPrice;
 
 $('document').ready(() => { 
+    $('.user').html(sessionStorage.getItem('email'))
 
     upcomingX();
     footballX();
     historyX();
 
-    $('.user').html(sessionStorage.getItem('email'))
+   
 })
 
 
@@ -130,10 +131,13 @@ $('#btnx').click(() => {
             matchx : $('#match').val(),
             seat:$('#seat').val(),
             price:$('#price').val(),
+            date: $('#date').html(),
+            time: $('#time').html(),
         },
         success: function(response) {
             console.log(response.trim());
             alert(response.trim())
+           
         },
         error: function() {
             console.error('Error sending data to server');
@@ -142,45 +146,92 @@ $('#btnx').click(() => {
 })
 
 function historyX(){
-    football.forEach((item, index) => {
-    const element = document.createElement('div');
-    element.innerHTML += `
-            <div class="hist" title="Click here to preview receipt">
-                <div>
-                   <img src="../img/football.jpg" alt="">
-                   <h3>${item.title}</h3> 
-                </div>
-                <p>${item.time}</p>
-                <p>&#8358;${item.price1}</p>
-                <p>${item.date}</p>
-            </div>`;
+    $.ajax({
+        url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',
+        method: 'POST',
+        data: {
+            opr: 'historyX',
+            email: sessionStorage.getItem('email'),
+        },
+        success: function(response) {
+            try {
+                var jsonData = $.parseJSON(response);
+                if (jsonData.status === 'success') {
+                    console.log(jsonData.data);
+                    historydb =jsonData.data;
+                    // alert('Success: ' + JSON.stringify(jsonData.data));
+                    // Continue with your code to process the data here
+                    historydb.forEach((item, index) => {
+                    const element = document.createElement('div');
+                    element.innerHTML += `
+                            <div class="hist" title="Click here to preview receipt">
+                                <div>
+                                   <img src="../img/football.jpg" alt="">
+                                   <h3>${item.Matchx}</h3> 
+                                </div>
+                                <p>${item.Time}</p>
+                                <p>&#8358;${item.Price}</p>
+                                <p>${item.Day}</p>
+                            </div>`;
 
-        history.appendChild(element)
+                        history.appendChild(element)
 
-    element.addEventListener('click', () => details(item.title, item.date, item.time, item.seats, item.price1, item.price2))
-    })
+                    element.addEventListener('click', () => details(item.Ticket_ID, item.Matchx, item.Day, item.Time, item.Seat_type, item.Price))
+                    })
+                } else {
+                    alert('Error: ' + jsonData.message);
+                }
+            } 
+            catch (e) {
+                console.error('Error parsing JSON:', e);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error sending data to server:', error);
+            console.error('Error sending data to server:', xhr);
+            console.error('Error sending data to server:', status);
+        }
+    });
+
+    // football.forEach((item, index) => {
+    // const element = document.createElement('div');
+    // element.innerHTML += `
+    //         <div class="hist" title="Click here to preview receipt">
+    //             <div>
+    //                <img src="../img/football.jpg" alt="">
+    //                <h3>${item.title}</h3> 
+    //             </div>
+    //             <p>${item.time}</p>
+    //             <p>&#8358;${item.price1}</p>
+    //             <p>${item.date}</p>
+    //         </div>`;
+
+    //     history.appendChild(element)
+
+    // element.addEventListener('click', () => details(item.title, item.date, item.time, item.seats, item.price1, item.price2))
+    // })
 }
 
-function details(title, date, time, seats, price1, price2){
+function details(Ticket_ID, title, date, time, seats, price){
     seat = $('#seat').val()
-    vipPrice = price1;
-    regPrice = price2;
+    // vipPrice = price1;
+    // regPrice = price2;
 
     var uname = sessionStorage.getItem('email');
 
-    $('.id').html(123)
+    $('.id').html(Ticket_ID)
     $('.oname').html(uname);
     
     $('.match').html(title)
     $('.date').html(date)
     $('.time').html(time)
     $('.seats').html(seats)
-
-    if(seat == 'VIP'){
-        $('.price').val(price1)
-    } else if(seat == 'regular'){
-        $('.price').val(price2)
-    }
+    $('.price').html(price)
+    // if(seat == 'VIP'){
+    //     $('.price').val(price1)
+    // } else if(seat == 'regular'){
+    //     $('.price').val(price2)
+    // }
     $('#booking-details').fadeIn(500)
 }
 
