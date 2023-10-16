@@ -16,7 +16,8 @@ $('#btny').click(()=>{
     // })
 
     $.ajax({
-        url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
+        url: 'http://localhost/Stadium/request.php',  // Replace with your server-side script
+        // url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
         method: 'POST',
         data: {
             opr: 'Login',
@@ -31,7 +32,7 @@ $('#btny').click(()=>{
             })
             }
             else{
-                alert('Username or password is incorrect, please try and Register.');
+                alert("Username or password is incorrect, make sure you'r registered!!.");
                 $('.loadery').hide(500, ()=>{
                     window.location.assign('./');
                    })
@@ -72,7 +73,8 @@ $('#btnx').click(()=>{
        
         
         $.ajax({
-        url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
+        url: 'http://localhost/Stadium/request.php',  // Replace with your server-side script
+        // url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
         method: 'POST',
         data: {
             opr: 'Signup',

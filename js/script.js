@@ -10,7 +10,7 @@ $('document').ready(() => {
 
     upcomingX();
     footballX();
-    historyX();
+    // historyX();
 
    
 })
@@ -122,7 +122,8 @@ $('#btnx').click(() => {
     // alert('Ticket booked successfully!! Kindly check "history" for your booking records')
 
     $.ajax({
-        url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
+        // url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
+        url: 'http://localhost/Stadium/request.php',  // Replace with your server-side script
         method: 'POST',
         data: {
             opr: 'Buy_ticket',
@@ -147,7 +148,8 @@ $('#btnx').click(() => {
 
 function historyX(){
     $.ajax({
-        url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',
+        url: 'http://localhost/Stadium/request.php',
+        // url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',
         method: 'POST',
         data: {
             opr: 'historyX',
@@ -161,9 +163,9 @@ function historyX(){
                     historydb =jsonData.data;
                     // alert('Success: ' + JSON.stringify(jsonData.data));
                     // Continue with your code to process the data here
-                    historydb.forEach((item, index) => {
-                    const element = document.createElement('div');
-                    element.innerHTML += `
+                    historydb.map((item, index) => {
+                    // const element = document.createElement('div');
+                    history.innerHTML += `
                             <div class="hist" title="Click here to preview receipt">
                                 <div>
                                    <img src="../img/football.jpg" alt="">
@@ -174,16 +176,16 @@ function historyX(){
                                 <p>${item.Day}</p>
                             </div>`;
 
-                        history.appendChild(element)
+                        // history.appendChild(element)
 
-                    element.addEventListener('click', () => details(item.Ticket_ID, item.Matchx, item.Day, item.Time, item.Seat_type, item.Price))
+                        history.addEventListener('click', () => details(item.Ticket_ID, item.Matchx, item.Day, item.Time, item.Seat_type, item.Price))
                     })
                 } else {
-                    alert('Error: ' + jsonData.message);
+                    alert(jsonData.message);
                 }
             } 
-            catch (e) {
-                console.error('Error parsing JSON:', e);
+            catch (err) {
+                console.error('Error parsing JSON:', err);
             }
         },
         error: function(xhr, status, error) {
@@ -237,12 +239,14 @@ function details(Ticket_ID, title, date, time, seats, price){
 
 
 $('#match-item').click(() => {
+    history.innerHTML = '';
     $('.content').show(500)
     $('.history').hide(500)
 })
 
 $('#history-item').click(() => {
     $('.content').hide(500)
-    $('.history').show(500)
+    $('.history').show(500);
+    historyX();
 })
 
