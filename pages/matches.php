@@ -64,7 +64,7 @@
 
     <div class="booking-details" id="booking-details">
         <div class="reserve">
-            <div class="head">
+            <div class="head" >
                 <h2>Booking Details</h2>
                 <i id="close" class="fa fa-close"></i>
             </div>
@@ -92,7 +92,7 @@
             <div class="label">
                 <label for="time">Time: </label><span class="time">4:00 pm</span>
             </div>
-            
+            <button onclick="printDiv('booking-details')">Print Reciept</button>
         </div>
     </div>
 

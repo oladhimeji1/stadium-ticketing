@@ -234,7 +234,16 @@ function details(Ticket_ID, title, date, time, seats, price){
     // }
     $('#booking-details').fadeIn(500)
 }
-
+function printDiv(divId) {
+    var content = document.getElementById(divId).innerHTML;
+    var printWindow = window.open('', '_blank');
+    printWindow.document.open();
+    printWindow.document.write('<html><head><title>Staduim Ticket</title></head><body>');
+    printWindow.document.write(content);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.print();
+}
 
 $('#match-item').click(() => {
     $('.content').show(500)
