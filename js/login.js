@@ -86,16 +86,9 @@ $('#btnx').click(()=>{
             psw: psw  // Replace with the appropriate value
         },
         success: function(response) {
-            console.log('Data sent to server:', response);
-            // // Assuming the server sends back a 'result' array, you can loop through it and display in recommendations
-            // const recommendationItems = response.result.map(option => `<h4>${option}</h4>`).join('');
-            // const recommendation = `
-            //     <div class="bg-white p-4 rounded shadow mb-2">
-            //         ${recommendationItems}
-            //     </div>
-            // `;
-            // $('#recommendations').html(recommendation);
-            // nextStep();
+            // console.log('Data sent to server:', response);
+            
+            alert(response);
             $('.loadery').hide(500, ()=>{
             window.location.assign('../')
            })
