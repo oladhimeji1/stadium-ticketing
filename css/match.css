@@ -54,7 +54,7 @@ nav img{
 .card{
     background-color: rgb(243, 243, 243);
     width: 13rem;
-    height: 13rem;
+    height: max-content;
     border-radius: 10px;
     cursor: pointer;
 }

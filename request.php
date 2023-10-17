@@ -1,18 +1,19 @@
 <?php
 // connection to database
 
-// $servername = "localhost:3302";
-// $username = "root";
-// $password = ""; 
-// $dbname = "examhall_db";
+$servername = "localhost:3306";
+$username = "id21411051_root";
+$password = "Ola-2000"; 
+$dbname = "id21411051_stadiumdb";
 
 // mike connection
-$servername = "localhost:3306";
-$username = "root";
-$password = ""; 
-$dbname = "Stadiumdb";
+// $servername = "localhost:3306";
+// $username = "root";
+// $password = ""; 
+// $dbname = "Stadiumdb";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
+
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -124,6 +125,7 @@ function Buy_ticket(){
     $conn->close();
 }
 
+$response[] = null; // Add the item to the response array
 function historyX(){
     $email = $_REQUEST['email'];
     global $conn;
@@ -150,7 +152,7 @@ function historyX(){
         // Send the response as JSON
         echo json_encode(array('status' => 'success', 'data' => $response));
     } else {
-        echo json_encode(array('status' => 'error', 'message' => 'You do not have any exam today, check timetable below for more details.'));
+        echo json_encode(array('status' => 'error', 'message' => 'You dont have any ticket yet!'));
     }
 
     $conn->close();

@@ -16,7 +16,8 @@ $('#btny').click(()=>{
     // })
 
     $.ajax({
-        url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
+        url: './request.php',  // Replace with your server-side script
+        // url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
         method: 'POST',
         data: {
             opr: 'Login',
@@ -31,7 +32,7 @@ $('#btny').click(()=>{
             })
             }
             else{
-                alert('Username or password is incorrect, please try and Register.');
+                alert("Username or password is incorrect, make sure you'r registered!!.");
                 $('.loadery').hide(500, ()=>{
                     window.location.assign('./');
                    })
@@ -72,7 +73,8 @@ $('#btnx').click(()=>{
        
         
         $.ajax({
-        url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
+        url: '../request.php',  // Replace with your server-side script
+        // url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
         method: 'POST',
         data: {
             opr: 'Signup',
@@ -84,16 +86,9 @@ $('#btnx').click(()=>{
             psw: psw  // Replace with the appropriate value
         },
         success: function(response) {
-            console.log('Data sent to server:', response);
-            // // Assuming the server sends back a 'result' array, you can loop through it and display in recommendations
-            // const recommendationItems = response.result.map(option => `<h4>${option}</h4>`).join('');
-            // const recommendation = `
-            //     <div class="bg-white p-4 rounded shadow mb-2">
-            //         ${recommendationItems}
-            //     </div>
-            // `;
-            // $('#recommendations').html(recommendation);
-            // nextStep();
+            // console.log('Data sent to server:', response);
+            
+            alert(response);
             $('.loadery').hide(500, ()=>{
             window.location.assign('../')
            })

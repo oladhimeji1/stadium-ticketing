@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/match.css">
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Document</title>
     <script src="../js/jquery.js"></script>
 </head>
@@ -22,7 +23,7 @@
             </div>
 
             <div class="welcome">
-                <p>Welcome, <span class="user">Abdulrazaq Oladimeji</span></p>
+                <p>Welcome, <span class="user"></span></p>
                 <img src="../img/aeroplane.jpg" alt="">
             </div>
         </div>
