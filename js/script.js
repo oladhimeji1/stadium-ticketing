@@ -123,7 +123,7 @@ $('#btnx').click(() => {
 
     $.ajax({
         // url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
-        url: 'http://localhost/Stadium/request.php',  // Replace with your server-side script
+        url: '../request.php',  // Replace with your server-side script
         method: 'POST',
         data: {
             opr: 'Buy_ticket',
@@ -148,7 +148,7 @@ $('#btnx').click(() => {
 
 function historyX(){
     $.ajax({
-        url: 'http://localhost/Stadium/request.php',
+        url: '../request.php',
         // url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',
         method: 'POST',
         data: {
@@ -163,9 +163,9 @@ function historyX(){
                     historydb =jsonData.data;
                     // alert('Success: ' + JSON.stringify(jsonData.data));
                     // Continue with your code to process the data here
-                    historydb.map((item, index) => {
-                    // const element = document.createElement('div');
-                    history.innerHTML += `
+                    historydb.forEach((item, index) => {
+                    const element = document.createElement('div');
+                    element.innerHTML += `
                             <div class="hist" title="Click here to preview receipt">
                                 <div>
                                    <img src="../img/football.jpg" alt="">
@@ -176,9 +176,9 @@ function historyX(){
                                 <p>${item.Day}</p>
                             </div>`;
 
-                        // history.appendChild(element)
+                        history.appendChild(element)
 
-                        history.addEventListener('click', () => details(item.Ticket_ID, item.Matchx, item.Day, item.Time, item.Seat_type, item.Price))
+                        element.addEventListener('click', () => details(item.Ticket_ID, item.Matchx, item.Day, item.Time, item.Seat_type, item.Price))
                     })
                 } else {
                     alert(jsonData.message);

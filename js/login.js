@@ -16,7 +16,7 @@ $('#btny').click(()=>{
     // })
 
     $.ajax({
-        url: 'http://localhost/Stadium/request.php',  // Replace with your server-side script
+        url: './request.php',  // Replace with your server-side script
         // url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
         method: 'POST',
         data: {
@@ -73,7 +73,7 @@ $('#btnx').click(()=>{
        
         
         $.ajax({
-        url: 'http://localhost/Stadium/request.php',  // Replace with your server-side script
+        url: '../request.php',  // Replace with your server-side script
         // url: 'http://localhost:8080/Stadium/stadium-ticketing/request.php',  // Replace with your server-side script
         method: 'POST',
         data: {

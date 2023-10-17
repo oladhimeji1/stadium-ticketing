@@ -1,10 +1,10 @@
 <?php
 // connection to database
 
-$servername = "localhost:3302";
-$username = "root";
-$password = ""; 
-$dbname = "Stadiumdb";
+$servername = "localhost:3306";
+$username = "id21411051_root";
+$password = "Ola-2000"; 
+$dbname = "id21411051_stadiumdb";
 
 // mike connection
 // $servername = "localhost:3306";
@@ -13,6 +13,7 @@ $dbname = "Stadiumdb";
 // $dbname = "Stadiumdb";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
+
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
